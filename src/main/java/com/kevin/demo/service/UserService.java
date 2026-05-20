@@ -2,6 +2,7 @@ package com.kevin.demo.service;
 
 import com.kevin.demo.entity.User;
 import com.kevin.demo.mapper.UserMapper;
+import com.kevin.demo.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,7 +19,11 @@ public class UserService {
     }
 
     public User selectById(int id) {
-        return userMapper.selectById(id);
+        User user = userMapper.selectById(id);
+        if (user == null) {
+            throw new BusinessException("User can not find ， id = " + id);
+        }
+        return user;
     }
 
     public int addUser(User user) {
