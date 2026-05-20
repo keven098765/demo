@@ -5,18 +5,23 @@ import com.kevin.demo.entity.User;
 import com.kevin.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 @RestController
 public class HelloController {
+
+    private static final Logger log = LoggerFactory.getLogger(HelloController.class);
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/users")
     public Result<List<User>> getUsers() {
+        log.info("Get all users' inf");
         List<User> list = userService.findAll();
+        log.info("find {} records.", list.size());
         return new Result<>(200, "succes", list);
     }
 
